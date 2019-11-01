@@ -13,7 +13,7 @@ class App extends Component {
       inventory: []
     }
 
-    this.createProduct = this.createProduct.bind(this);
+    // this.createProduct = this.createProduct.bind(this);
   }
 
   componentDidMount() {
@@ -26,6 +26,16 @@ class App extends Component {
     })
   }
 
+  getUpdatedInventory() {
+    axios
+    .get('api/inventory')
+    .then(res => [
+      this.setState({
+        inventory: res.data
+      })
+    ])
+  }
+
 
 
   render() {
@@ -33,8 +43,8 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <Form />
-        <Dashboard inventory={this.state.inventory}/>
+        <Form getUpdatedInventory = {() => this.getUpdatedInventory()} />
+        <Dashboard inventory={this.state.inventory} getUpdatedInventory = {() => this.getUpdatedInventory}/>
       </div>
     )
   }

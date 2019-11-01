@@ -6,4 +6,4 @@ CREATE TABLE product (
 );
 
 INSERT INTO product (name, price, image_url)
-VALUES ($1, $2,);
+VALUES ($1, $2, $3);
