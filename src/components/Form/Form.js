@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './form.css'
 
 export default class Form extends Component {
 
@@ -12,7 +13,8 @@ export default class Form extends Component {
         }
         this.baseState = this.state;
         this.createProduct = this.createProduct.bind(this);
-        this.clearForm = this.clearForm.bind(this)
+        this.clearForm = this.clearForm.bind(this);
+
     }
 
     handleChange(e) {
@@ -71,9 +73,10 @@ export default class Form extends Component {
                     >
                     </input>
                 </form>
-
-                <button onClick={(e) => this.clearForm(e)}>Cancel</button>
-                <button onClick={(e) => this.createProduct(e)}>Add to Inventory</button>
+                <div className="btns">
+                    <button onClick={(e) => this.clearForm(e)}>Cancel</button>
+                    <button onClick={(e) => this.createProduct(e)}>Add to Inventory</button>
+                </div>
             </div>
         )
     }

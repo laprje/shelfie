@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './App.css'
 import Header from './components/Header/Header';
 import Dashboard from './components/Dashboard/Dashboard';
 import Form from './components/Form/Form';
@@ -28,7 +28,7 @@ class App extends Component {
 
   getUpdatedInventory() {
     axios
-    .get('api/inventory')
+    .get('/api/inventory')
     .then(res => [
       this.setState({
         inventory: res.data

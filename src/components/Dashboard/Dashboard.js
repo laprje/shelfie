@@ -6,11 +6,19 @@ export default class Dashboard extends Component {
 
     constructor() {
         super()
+        this.deleteProduct = this.deleteProduct.bind(this)
     }
 
-    deleteProduct(id) {
+
+    deleteProduct(productName) {
         axios
-        .delete('/api/product/:id')
+        .delete(`/api/product/${productName}`)
+        .then(res => {
+            this.props.getUpdatedInventory();
+            this.setState({
+                inventory: res.data
+            })
+        })
     }
 
     render() {
@@ -18,7 +26,7 @@ export default class Dashboard extends Component {
             <div>
                 <div>Dashboard.js</div>
                 {this.props.inventory.map(el => (
-                    <Product productObj={el} key={'product' + el.name} />
+                    <Product productObj={el} key={'product' + el.name} deleteProduct = {() => this.deleteProduct()} />
                 ))}
             </div>
         )

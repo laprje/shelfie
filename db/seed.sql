@@ -7,3 +7,5 @@ CREATE TABLE product (
 
 INSERT INTO product (name, price, image_url)
 VALUES ($1, $2, $3);
+
+DELETE FROM product WHERE product_id = $1;

@@ -29,10 +29,12 @@ module.exports = {
 
     deleteProduct: (req, res) => {
         const db = req.app.get('db');
-        const { product_id } = req.body;
+        const { productName } = req.params;
+        console.log(productName);
+        db.delete_product(productName)
         
-        db.delete_product(product_id)
-            .then(inventory => res.status(200).send(inventory))
+            .then(() => {
+                res.sendStatus(200)})
             .catch(err => {
                 res.status(500).send("something went wrong.")
                 console.log(err)
