@@ -44,7 +44,7 @@ class App extends Component {
       <div>
         <Header />
         <Form getUpdatedInventory = {() => this.getUpdatedInventory()} />
-        <Dashboard inventory={this.state.inventory} getUpdatedInventory = {() => this.getUpdatedInventory}/>
+        <Dashboard inventory={this.state.inventory} getUpdatedInventory = {() => this.getUpdatedInventory()}/>
       </div>
     )
   }
