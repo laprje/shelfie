@@ -1,4 +1,4 @@
-import { React, Component } from 'react';
+import React, { Component } from 'react';
 import Product from '../Product/Product';
 
 export default class Dashboard extends Component {
@@ -6,7 +6,9 @@ export default class Dashboard extends Component {
         return (
             <div>
                 <div>Dashboard.js</div>
-                <Product />
+                {this.props.inventory.map(el => (
+                    <Product productObj={el} key={'product' + el.name} />
+                ))}
             </div>
         )
     }
