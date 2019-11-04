@@ -9,13 +9,28 @@ export default class Form extends Component {
         this.state = {
             product_name: '',
             price: null,
-            image_url: ''
+            image_url: '',
+            addOrSave: 'Add to Inventory',
+            editingId: null
         }
         this.baseState = this.state;
         this.createProduct = this.createProduct.bind(this);
         this.clearForm = this.clearForm.bind(this);
 
     }
+
+    componentDidUpdate(oldProps) {
+        if(oldProps.data ===! this.props.data) {
+            this.setState({
+                product_name: this.props.product_name,
+                price: this.props.price,
+                image_url: this.props.image_url,
+                addOrSave: "Save Changes",
+                editingId: this.props.product_id //you left off here!!!! 
+            })
+            
+        }
+    } 
 
     handleChange(e) {
         this.setState({
@@ -35,9 +50,11 @@ export default class Form extends Component {
             .then(res => {
                 this.props.getUpdatedInventory();
                 this.setState({
-                    inventory: res.data
+                    inventory: res.data,
+                    addOrSave: "Add to Inventory"
                 })
                 this.clearForm();
+                
             })
     }
 
@@ -75,9 +92,10 @@ export default class Form extends Component {
                 </form>
                 <div className="btns">
                     <button onClick={(e) => this.clearForm(e)}>Cancel</button>
-                    <button onClick={(e) => this.createProduct(e)}>Add to Inventory</button>
+                    <button className="add-btn" onClick={(e) => this.createProduct(e)}>{this.state.addOrSave}</button>
                 </div>
             </div>
+            
         )
     }
 }

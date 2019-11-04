@@ -10,7 +10,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      inventory: []
+      inventory: [],
+      whichProduct: this.productObj
     }
 
     // this.createProduct = this.createProduct.bind(this);
@@ -36,6 +37,14 @@ class App extends Component {
     ])
   }
 
+  getProductForEdit(productObj) {
+    this.setState({
+      product_name: productObj.product_name,
+      price: productObj.price,
+      image_url: productObj.image_url
+    })
+  }
+
 
 
   render() {
@@ -44,7 +53,7 @@ class App extends Component {
       <div>
         <Header />
         <Form getUpdatedInventory = {() => this.getUpdatedInventory()} />
-        <Dashboard inventory={this.state.inventory} getUpdatedInventory = {() => this.getUpdatedInventory()}/>
+        <Dashboard getProductForEdit = {(productObj) => this.getProductForEdit(productObj)}whichProduct={this.state.whichProduct} inventory={this.state.inventory} getUpdatedInventory = {() => this.getUpdatedInventory()}/>
       </div>
     )
   }
@@ -52,3 +61,6 @@ class App extends Component {
 
 
 export default App;
+
+//so far, you've wrote the method for setting state to the selected product.
+// But, you havent' done much with it in the Form file.
