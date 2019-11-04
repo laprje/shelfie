@@ -4,21 +4,33 @@ import axios from 'axios';
 
 export default class Dashboard extends Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
+        // this.deleteProduct = this.deleteProduct.bind(this)
         this.deleteProduct = this.deleteProduct.bind(this)
     }
 
 
-    deleteProduct(productName) {
+    // deleteProduct(productName) {
+    //     axios
+    //         .delete(`/api/product/${productName}`)
+    //         .then(res => {
+    //             this.props.getUpdatedInventory();
+    //             this.setState({
+    //                 inventory: res.data
+    //             })
+    //         })
+    // }
+
+    deleteProduct(product_id) {
         axios
-        .delete(`/api/product/${productName}`)
-        .then(res => {
-            this.props.getUpdatedInventory();
-            this.setState({
-                inventory: res.data
+            .delete(`/api/inventory/${product_id}`)
+            .then(res => {
+                this.props.getUpdatedInventory();
+                this.setState({
+                    inventory: res.data
+                })
             })
-        })
     }
 
     render() {
@@ -26,7 +38,8 @@ export default class Dashboard extends Component {
             <div>
                 <div>Dashboard.js</div>
                 {this.props.inventory.map(el => (
-                    <Product productObj={el} key={'product' + el.name} deleteProduct = {() => this.deleteProduct()} />
+                    // <Product productObj={el} key={'product' + el.name} deleteProduct = {() => this.deleteProduct()} />
+                    <Product productObj={el} key={'product' + el.name} deleteProduct = {(product_id) => this.deleteProduct(product_id)}/> //maybe add product_name in the beginning parenthesis??
                 ))}
             </div>
         )

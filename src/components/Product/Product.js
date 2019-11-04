@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import './product.css'
 
 export default class Product extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
     }
     render() {
@@ -13,7 +13,8 @@ export default class Product extends Component {
                 <h4>${this.props.productObj.price}</h4>
                 <img src={this.props.productObj.image_url} alt={this.props.productObj.name}></img>
                 <div className="btns">
-                    <button onClick={() => this.props.deleteProduct()}>DELETE</button>
+                    {/* <button onClick={() => this.props.deleteProduct()}>DELETE</button> */}
+                    <button onClick={() => {this.props.deleteProduct(this.props.productObj.product_id)}}>DELETE</button>
                 </div>
             </div>
         )

@@ -7,7 +7,7 @@ export default class Form extends Component {
     constructor() {
         super();
         this.state = {
-            productName: '',
+            product_name: '',
             price: null,
             image_url: ''
         }
@@ -50,8 +50,8 @@ export default class Form extends Component {
                         className="input"
                         placeholder="Add a Product Name"
                         onChange={(e) => this.handleChange(e)}
-                        name='productName'
-                        value={this.state.productNameInput}
+                        name='product_name'
+                        value={this.state.product_nameInput}
                     >
                     </input>
 
