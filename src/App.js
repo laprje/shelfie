@@ -11,10 +11,11 @@ class App extends Component {
     super();
     this.state = {
       inventory: [],
-      whichProduct: this.productObj
+      currentProduct: {}
     }
 
     // this.createProduct = this.createProduct.bind(this);
+    this.editSelect = this.editSelect.bind(this);
   }
 
   componentDidMount() {
@@ -37,11 +38,9 @@ class App extends Component {
     ])
   }
 
-  getProductForEdit(productObj) {
+  editSelect(product) {
     this.setState({
-      product_name: productObj.product_name,
-      price: productObj.price,
-      image_url: productObj.image_url
+      currentProduct: product
     })
   }
 
@@ -53,7 +52,7 @@ class App extends Component {
       <div>
         <Header />
         <Form getUpdatedInventory = {() => this.getUpdatedInventory()} />
-        <Dashboard getProductForEdit = {(productObj) => this.getProductForEdit(productObj)}whichProduct={this.state.whichProduct} inventory={this.state.inventory} getUpdatedInventory = {() => this.getUpdatedInventory()}/>
+        <Dashboard editSelect={this.editSelect()} currentProduct={this.currentProduct} inventory={this.state.inventory} getUpdatedInventory = {() => this.getUpdatedInventory()}/>
       </div>
     )
   }

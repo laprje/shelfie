@@ -7,6 +7,7 @@ export default class Form extends Component {
     constructor() {
         super();
         this.state = {
+            id: null,
             product_name: '',
             price: null,
             image_url: '',
@@ -20,17 +21,11 @@ export default class Form extends Component {
     }
 
     componentDidUpdate(oldProps) {
-        if(oldProps.data ===! this.props.data) {
-            this.setState({
-                product_name: this.props.product_name,
-                price: this.props.price,
-                image_url: this.props.image_url,
-                addOrSave: "Save Changes",
-                editingId: this.props.product_id //you left off here!!!! 
-            })
-            
+        let { id, name, price, img } = this.props.product;
+        if (oldProps.product.id !== this.props.product.id) {
+          this.setState({ id, name, price, img, edit: true });
         }
-    } 
+      }
 
     handleChange(e) {
         this.setState({

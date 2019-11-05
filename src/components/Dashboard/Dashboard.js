@@ -39,7 +39,7 @@ export default class Dashboard extends Component {
                 <div>Dashboard.js</div>
                 {this.props.inventory.map(el => (
                     // <Product productObj={el} key={'product' + el.name} deleteProduct = {() => this.deleteProduct()} />
-                    <Product productObj={el} key={'product' + el.name} deleteProduct = {(product_id) => this.deleteProduct(product_id)}/> //maybe add product_name in the beginning parenthesis??
+                    <Product editSelect={this.props.editSelect} productObj={el} key={'product' + el.name} deleteProduct = {(product_id) => this.deleteProduct(product_id)}/> //maybe add product_name in the beginning parenthesis??
                 ))}
             </div>
         )
