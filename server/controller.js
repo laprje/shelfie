@@ -52,6 +52,32 @@ module.exports = {
                 res.status(500).send('something went wrong.');
                 console.log(err);
             })
+    },
+
+    editProduct(req, res) {
+        const db = req.app.get('db')
+        const { product_name, image, price, product_id } = req.body
+        db.edit_product({product_name, image, price, product_id: +product_id})
+        .then(result => {
+            res.status(200).send(result)
+        })
+        .catch(err => {
+            res.status(500).send('something went wrong.')
+            console.log(err)
+        })
+    },
+
+
+    oneProduct(req, res) {
+        const db = req.app.get('db')
+        db.one_product(+req.params.id)
+        .then(result => {
+            res.status(200).send(result)
+        })
+        .catch(err => {
+            res.status(500).send('something went wrong.')
+            console.log(err)
+        })
     }
 
 

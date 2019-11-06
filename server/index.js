@@ -18,5 +18,8 @@ app.get('/api/inventory', ctrl.getInventory)
 app.post('/api/product', ctrl.createProduct)
 // app.delete('/api/product/:id', ctrl.deleteProduct)
 app.delete('/api/inventory/:product_id', ctrl.deleteProduct)
+app.put('/api/inventory/:id', ctrl.editProduct)
+app.get('/api/inventory/:id', ctrl.oneProduct)
+
 
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}.`))

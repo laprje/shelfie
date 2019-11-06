@@ -4,28 +4,49 @@ import './form.css'
 
 export default class Form extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            id: null,
+            product_id: null,
             product_name: '',
             price: null,
             image_url: '',
-            addOrSave: 'Add to Inventory',
-            editingId: null
+            show: true
         }
         this.baseState = this.state;
         this.createProduct = this.createProduct.bind(this);
         this.clearForm = this.clearForm.bind(this);
-
+        this.saveChanges = this.saveChanges.bind(this);
     }
 
-    componentDidUpdate(oldProps) {
-        let { id, name, price, img } = this.props.product;
-        if (oldProps.product.id !== this.props.product.id) {
-          this.setState({ id, name, price, img, edit: true });
+    componentDidMount() {
+        if (this.props.match.params.id) {
+            axios
+                .get(`api/inventory/${this.props.match.params.id}`)
+                .then(res => {
+
+                    let {id, name, image, price} = res.data[0]
+                    this.setState({
+                        id: id, 
+                        name: name, 
+                        image: image, 
+                        price: price, 
+                        show: false
+                    })
+                    console.log(this.state)
+                })
+                .catch(err => console.log(err))
         }
-      }
+    }
+
+    saveChanges() {
+        axios
+            .put(`/api/inventory/${this.state.id}`, this.state)
+            .then(() => this.props.history.push("/"))
+            .catch(err => console.log(err))
+    }
+
+    
 
     handleChange(e) {
         this.setState({
@@ -43,13 +64,11 @@ export default class Form extends Component {
         axios
             .post('api/product', this.state)
             .then(res => {
-                this.props.getUpdatedInventory();
+                // this.props.getUpdatedInventory();
                 this.setState({
-                    inventory: res.data,
-                    addOrSave: "Add to Inventory"
+                    inventory: res.data
                 })
                 this.clearForm();
-                
             })
     }
 
@@ -87,11 +106,10 @@ export default class Form extends Component {
                 </form>
                 <div className="btns">
                     <button onClick={(e) => this.clearForm(e)}>Cancel</button>
-                    <button className="add-btn" onClick={(e) => this.createProduct(e)}>{this.state.addOrSave}</button>
+                    <button hidden={!this.state.show} className="add" onClick={this.createProduct}>Add</button>
+                    <button hidden={this.state.show} className="save" onClick={this.saveChanges}>Save Changes</button>
                 </div>
             </div>
-            
         )
     }
 }
-

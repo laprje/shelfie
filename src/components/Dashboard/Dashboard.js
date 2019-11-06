@@ -4,32 +4,48 @@ import axios from 'axios';
 
 export default class Dashboard extends Component {
 
-    constructor(props) {
-        super(props)
-        // this.deleteProduct = this.deleteProduct.bind(this)
-        this.deleteProduct = this.deleteProduct.bind(this)
+    constructor() {
+        super()
+        this.state = {
+            inventory: []
+        }
+        
+        // this.getupdatedInventory = this.getupdatedInventory.bind(this);
+        
     }
 
 
-    // deleteProduct(productName) {
-    //     axios
-    //         .delete(`/api/product/${productName}`)
-    //         .then(res => {
-    //             this.props.getUpdatedInventory();
-    //             this.setState({
-    //                 inventory: res.data
-    //             })
-    //         })
-    // }
+
+    componentDidMount() {
+        axios
+        .get('/api/inventory')
+        .then(res => {
+          this.setState({
+            inventory: res.data
+          })
+        })
+      }
+    
+      getUpdatedInventory() {
+        axios
+        .get('/api/inventory')
+        .then(res => [
+          this.setState({
+            inventory: res.data
+          })
+        ])
+      }
 
     deleteProduct(product_id) {
         axios
             .delete(`/api/inventory/${product_id}`)
             .then(res => {
-                this.props.getUpdatedInventory();
+                console.log(this.state.inventory);
+                this.getUpdatedInventory();
                 this.setState({
-                    inventory: res.data
+                    inventory: [res.data]
                 })
+                
             })
     }
 
@@ -37,9 +53,12 @@ export default class Dashboard extends Component {
         return (
             <div>
                 <div>Dashboard.js</div>
-                {this.props.inventory.map(el => (
-                    // <Product productObj={el} key={'product' + el.name} deleteProduct = {() => this.deleteProduct()} />
-                    <Product editSelect={this.props.editSelect} productObj={el} key={'product' + el.name} deleteProduct = {(product_id) => this.deleteProduct(product_id)}/> //maybe add product_name in the beginning parenthesis??
+                {this.state.inventory.map(el => (
+                    <Product 
+                    getUpdatedInventory={this.getUpdatedInventory} 
+                    productObj={el} key={'product' + el.name} 
+                    deleteProduct = {(product_id) => this.deleteProduct(product_id)}
+                    /> 
                 ))}
             </div>
         )
