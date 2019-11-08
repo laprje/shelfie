@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './form.css'
+import './form.css';
+import {Link} from 'react-router-dom';
 
 export default class Form extends Component {
 
@@ -8,7 +9,7 @@ export default class Form extends Component {
         super(props);
         this.state = {
             product_id: null,
-            product_name: '',
+            name: '',
             price: null,
             image_url: '',
             show: true
@@ -20,20 +21,22 @@ export default class Form extends Component {
     }
 
     componentDidMount() {
-        if (this.props.match.params.id) {
+        
+        if (this.props.match.params.product_id) {
             axios
-                .get(`api/inventory/${this.props.match.params.id}`)
+                .get(`api/inventory/${this.props.match.params.product_id}`)
+                
                 .then(res => {
-
-                    let {id, name, image, price} = res.data[0]
+                    
+                    let {name, image_url, price, product_id} = res.data[0]
                     this.setState({
-                        id: id, 
+                        product_id: product_id, 
                         name: name, 
-                        image: image, 
+                        image_url: image_url, 
                         price: price, 
                         show: false
                     })
-                    console.log(this.state)
+                    // console.log(this.state)
                 })
                 .catch(err => console.log(err))
         }
@@ -41,7 +44,7 @@ export default class Form extends Component {
 
     saveChanges() {
         axios
-            .put(`/api/inventory/${this.state.id}`, this.state)
+            .put(`/api/inventory/${this.state.product_id}`, this.state)
             .then(() => this.props.history.push("/"))
             .catch(err => console.log(err))
     }
@@ -64,11 +67,10 @@ export default class Form extends Component {
         axios
             .post('api/product', this.state)
             .then(res => {
-                // this.props.getUpdatedInventory();
+                
                 this.setState({
                     inventory: res.data
                 })
-                this.clearForm();
             })
     }
 
@@ -81,8 +83,8 @@ export default class Form extends Component {
                         className="input"
                         placeholder="Add a Product Name"
                         onChange={(e) => this.handleChange(e)}
-                        name='product_name'
-                        value={this.state.product_nameInput}
+                        name='name'
+                        value={this.state.name}
                     >
                     </input>
 
@@ -91,7 +93,7 @@ export default class Form extends Component {
                         placeholder="Add a Price"
                         onChange={(e) => this.handleChange(e)}
                         name='price'
-                        value={this.state.priceInput}
+                        value={this.state.price}
                     >
                     </input>
 
@@ -100,13 +102,17 @@ export default class Form extends Component {
                         placeholder="Add an Image URL"
                         onChange={(e) => this.handleChange(e)}
                         name='image_url'
-                        value={this.state.imageUrlInput}
+                        value={this.state.image_url}
                     >
                     </input>
                 </form>
                 <div className="btns">
                     <button onClick={(e) => this.clearForm(e)}>Cancel</button>
+
+                    <Link to="/">
                     <button hidden={!this.state.show} className="add" onClick={this.createProduct}>Add</button>
+                    </Link>
+
                     <button hidden={this.state.show} className="save" onClick={this.saveChanges}>Save Changes</button>
                 </div>
             </div>

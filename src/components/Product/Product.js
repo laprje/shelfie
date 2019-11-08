@@ -3,11 +3,10 @@ import './product.css'
 import {Link} from 'react-router-dom'
 
 export default class Product extends Component {
+
+
     
-    deleteBtn() {
-        this.props.deleteProduct(this.props.productObj.product_id)
-        this.props.getUpdatedInventory()
-    }
+    
     render() {
         return (
             <div className="product">
@@ -19,11 +18,11 @@ export default class Product extends Component {
                     </div>
                 ) : null}
                 <div className="btns">
-                    {/* <button onClick={() => this.props.deleteProduct()}>DELETE</button> */}
+                    
                     <button onClick={() => { this.props.deleteProduct(this.props.productObj.product_id) }}>DELETE</button>
 
                     <Link to={`/add/${this.props.productObj.product_id}`}>
-                        <button className="edit-btn">EDIT</button>
+                        <button  className='edit-btn'>EDIT{`${this.props.productObj.product_id}`}</button>
                     </Link>
                 </div>
             </div>

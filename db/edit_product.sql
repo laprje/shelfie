@@ -1,5 +1,5 @@
 UPDATE product
-SET name = $1,
-price = $2,
-image_url = $3,
-where product_id = $4;
+SET name = ${name},
+price = ${price},
+image_url = ${image_url}
+WHERE product_id = ${product_id};
